@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+	<meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+
+    <title>Cover Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="page-header">
+	  <h1>뉴스 RSS 등록</h1>
+	</div>
+	<div class="site-wrapper">
+        <div class="row">
+			<form id="frm" class="form-horizontal">
+		    <div class="form-group">
+		        <label for="compCd" class="control-label col-sm-1">언론사 *</label>
+		        <div class="col-sm-5">
+					<select class="form-control" id="compCd" name="compCd">
+					    <option value="">선택</option>
+		                <option th:each="vo : ${newsCompCdList}" th:value="${vo.codeId}" th:text="${vo.codeNm}"></option>
+					</select>
+		        </div>
+		        <label for="clCd" class="col-sm-1 control-label">분야 *</label>
+		        <div class="col-sm-5">
+		            <select class="form-control" id="clCd" name="clCd">
+		                <option value="">선택</option>
+		                <option th:each="vo : ${newsClCdList}" th:value="${vo.codeId}" th:text="${vo.codeNm}"></option>
+		            </select>
+		        </div>
+		    </div>
+			<div class="form-group">
+				<label for="rssUrl" class="col-sm-1 control-label">RSS URL *</label>
+				<div class="col-sm-11">
+			        <input type="text" class="form-control" id="rssUrl" name="rssUrl" placeholder="RSS URL" maxlength="300">
+		        </div>
+			</div>
+			<div class="form-group">
+				<label for="useYn" class="col-sm-1 control-label">사용여부 *</label>
+				<div class="col-sm-11">
+					<div class="radio">
+					    <label><input type="radio" name="useYn" id="useYnY" value="Y" checked="checked">사용</label>
+					    <label><input type="radio" name="useYn" id="useYnN" value="N">미사용</label>
+					</div>
+		        </div>
+			</div>
+			<div class="form-group">
+			    <div class="col-sm-10">
+		            <input type="button" value="저장" onclick="save()" class="btn btn-default">
+	                <input type="button" value="테스트" onclick="getCode()" class="btn btn-default">
+			    </div>
+			</div>
+			</form>
+		</div>
+		<div class="row">
+			<table class="table table-bordered">
+			    <thead>
+			        <tr>
+			            <th scope="col">일련번호</th>
+			            <th scope="col">URL</th>
+			            <th scope="col">사용여부</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr th:each="vo : ${newsRssList}">
+			            <th th:text="${vo.rssSeq}"></th>
+			            <th th:text="${vo.rssUrl}"></th>
+			            <th th:text="${vo.useYn}"></th>
+			        </tr>
+			    </tbody>
+			</table>
+			<nav>
+			    <ul class="pagination">
+			        <li th:classappend="${newsRssVo.firstPageNoOnPageList} == 1 ? null : disabled">
+			            <a href="#" aria-label="Previous">
+			                <span aria-hidden="true">&laquo;</span>
+			            </a>
+			        </li>
+			        <li th:each="idx,iterStat : ${#numbers.sequence(newsRssVo.firstPageNoOnPageList, newsRssVo.lastPageNoOnPageList)}" th:classappend="${newsRssVo.currentPageNo} == ${idx} ? active : null">
+			            <a th:onclick="|javascript:alert('${idx}')|" th:text="${idx}"></a>
+			        </li>
+			        <li th:classappend="${newsRssVo.lastPageNoOnPageList} * ${newsRssVo.pageSize} >= ${newsRssVo.totalRecordCount} ? null : disabled">
+			            <a href="#" aria-label="Next">
+			                <span aria-hidden="true">&raquo;</span>
+			            </a>
+			        </li>
+			    </ul>
+			</nav>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+
+<script type="text/javascript">
+/**
+ * 저장
+ */
+function save() {
+	
+	var compCd = $("#compCd");  //뉴스 언론사 코드
+	
+	if (compCd.val()=="") {
+		alert("언론사를 선택해주세요.");
+		compCd.focus();
+		return;
+	}
+	
+	var clCd = $("#clCd");
+	
+    if (clCd.val()=="") {
+        alert("분야를 선택해주세요.");
+        clCd.focus();
+        return;
+    }
+    
+    var rssUrl = $("#rssUrl");
+    
+    if (rssUrl.val()=="") {
+        alert("URL을 입력해주세요.");
+        rssUrl.focus();
+        return;
+    } 
+	
+	$.ajax({
+          type : "POST"
+        , url : "/admin/news/main/save"
+        , data : $("#frm").serialize()
+        , error : function(){
+            alert("error");
+          }
+        , success : function(data){
+            alert("success");
+          }
+    });
+}
+
+function getCode() {
+    $.ajax({
+          type : "POST"
+        , url : "/comm/getCommCodeList"
+        , data : { "codeGroupId" : "G1" }
+        , error : function(){
+            alert("error");
+          }
+        , success : function(data){
+            alert("success");
+            alert(data.commCodeList[0].codeGroupId);
+          }
+    });
+}
+
+$(function () {
+	//Spring Security csrf 관련 설정
+    var token  = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+    $(document).ajaxSend(function(e, xhr, options) {
+        if(token && header) {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+});
+</script>
+</body>
+</html>

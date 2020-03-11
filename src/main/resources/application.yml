@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://106.10.44.218:3306/study?useSSL=false
+    username: study
+    password: P@ssw0rd
+
+  #JPA 설정
+  jpa:
+    hibernate:
+      #스키마 생성 (create, update)
+      ddl-auto: update
+    #DDL 생성 시 데이터베이스 고유의 기능을 사용하는가?
+    generate-ddl: false
+    #실행되는 SQL 문을 보여줄 것인가?
+    show-sql: true
+    #데이터베이스는 무엇을 사용하는가?
+    database: mysql
+    #MySQL 상세 지정
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    
+  #출력되는 로그에 색상 출력
+  output:
+    ansi:
+      enabled: always
+
+  #thymeleaf 서버 재시작 없이 바로 확인 할수 있도록
+  thymeleaf:
+    cache: false
+
+
+#mybatis
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  #mapper-locations: mapper/**/*.xml
+
+
+#로그레벨
+logging:
+  level:
+    root: info
+    org:
+      hibernate : info
+  file: application.log
+
+#구글 API
+gapi:
+  client:
+    id: 904961043739-q6t04u0bcq6uspeu2cp82p8qe4di85sk.apps.googleusercontent.com
+
+#스케줄러
+scheduler:
+    #날씨 스케줄러
+    weather:
+        #스케줄러 수행 여부 - true:동작, false:동작안함
+        isStart: false
+      
+    #뉴스 스케줄러
+    news: 
+        #스케줄러 수행 여부 - true:동작, false:동작안함
+        isStart: false
+
+    stockDealRank:
+        isRunning: true
+       
