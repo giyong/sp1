@@ -29,4 +29,32 @@
 		       )
     </select>
 
+    <select id="insertStockDealRankList" parameterType="java.util.List">
+        /* StockDealRank.insertStockDealRank - 주식매매순위 등록 */
+
+		insert into tb_stock_deal_rank ( deal_day
+		                               , rank
+		                               , stocks_cd
+		                               , stocks_nm
+		                               , trader_type
+		                               , deal_type
+		                               , deal_qty
+		                               , deal_price
+		                               , day_deal_qty
+		                               )
+		values
+		<foreach item="o" index="index" collection="list" separator=",">
+            ( #{o.dealDay}     /* 거래일자 */
+            , #{o.rank}        /* 순위 */
+            , #{o.stocksCd}    /* 종목코드 */
+            , #{o.stocksNm}    /* 종목명 */
+            , #{o.traderType}  /* 거래자유형 */
+            , #{o.dealType}    /* 거래유형 */
+            , #{o.dealQty}     /* 거래수량 */
+            , #{o.dealPrice}   /* 거래금액 */
+            , #{o.dayDealQty}  /* 하루거래수량 */
+            )
+        </foreach>
+    </select>
+
 </mapper>

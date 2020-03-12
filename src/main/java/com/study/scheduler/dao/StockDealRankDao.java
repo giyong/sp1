@@ -1,5 +1,7 @@
 package com.study.scheduler.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,11 +16,18 @@ public class StockDealRankDao {
 
 	/**
 	 * 주식매매순위 등록
-	 * @return
 	 */
 	public int insertStockDealRank(StockDealRankVo stockDealRankVo) {
 
 		return sqlSession.insert("StockDealRank.insertStockDealRank", stockDealRankVo);
+	}
+
+	/**
+	 * 주식매매순위 등록
+	 */
+	public int insertStockDealRankList(List<StockDealRankVo> stockDealRankList) {
+
+		return sqlSession.insert("StockDealRank.insertStockDealRankList", stockDealRankList);
 	}
 
 }

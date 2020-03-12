@@ -1,7 +1,11 @@
 package com.study.scheduler.job;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.study.scheduler.domain.StockDealRankVo;
 import com.study.scheduler.service.StockDealRankService;
 
 import lombok.extern.log4j.Log4j2;
@@ -38,7 +43,7 @@ public class StockDealRankScheduler {
      * 10초에 한번씩 수행
      * @throws InterruptedException
      */
-    @Scheduled(fixedDelayString = "10000")  //스케줄러 동작 완료 후 설정된 시간뒤에 재실행
+    @Scheduled(fixedDelayString = "100000")  //스케줄러 동작 완료 후 설정된 시간뒤에 재실행
     public void job() throws InterruptedException {
 
     	// TODO 실행여부를 init에서 처리할수 없을까?
@@ -52,19 +57,20 @@ public class StockDealRankScheduler {
         // TODO doc 전체를 DB에 저장하여 일정기간 동안 보관 후 삭제
         try {
 
-        	String url      = "https://finance.naver.com/sise/sise_deal_rank_iframe.nhn?sosok=01&investor_gubun=9000&type=buy";  // 외국인순매수 (단위:천주, 백만원)
-        	String selector = "div.box_type_m_1_top div.box_type_ms";
+        	String url = "https://finance.naver.com/sise/sise_deal_rank_iframe.nhn?sosok=01&investor_gubun=9000&type=buy";  // 외국인순매수 (단위:천주, 백만원)
+
         	Document doc = Jsoup.connect(url).get();
 
-        	String day = "20" + doc.select(selector).eq(1).select("div.sise_guide_date").text().replaceAll(".", "");
+        	Elements tables = doc.select("div.box_type_m_1_top div.box_type_ms").eq(1);
 
-        	log.info("day : " + day);
+        	// 거래일자
+        	String dealDay = "20" + tables.select("div.sise_guide_date").text().replaceAll("\\.", "");
 
-            Elements el = doc.select(selector).eq(1).select("tbody tr:gt(1)");  // 첫번째 tr은 해더라서 제외
+            Elements tbody = tables.select("tbody tr:gt(1)");  // 첫번째 tr은 해더라서 제외
 
-            log.info("el size : " + el.size());
+            List<StockDealRankVo> StockDealRankList = new ArrayList<StockDealRankVo>();
 
-            for (Element tr: el) {
+            for (Element tr: tbody) {
 
             	int size = tr.select("td[colspan=4]").size();  // 가로선 tr 제외
 
@@ -94,7 +100,21 @@ public class StockDealRankScheduler {
             	log.info("수량 : {}", qty);
             	log.info("금액 : {}", price);
 
-            	log.info(tr.toString());
+            	StockDealRankVo stockDealRankVo = new StockDealRankVo();
+            	stockDealRankVo.setDealDay(dealDay);      // 거래일자
+            	stockDealRankVo.setTraderType("외국인");  // 거래자유형 TODO 공통코드
+            	stockDealRankVo.setDealType("매수");      // 거래유형   TODO 공통코드
+            	stockDealRankVo.setRank("1");             // 순위
+            	stockDealRankVo.setStocksCd(cd);          // 종목코드
+            	stockDealRankVo.setStocksNm(nm);          // 종목명
+            	stockDealRankVo.setDealQty(qty.replaceAll("\\,", ""));      // 거래수량
+            	stockDealRankVo.setDealPrice(price.replaceAll("\\,", ""));  // 거래금액
+            	StockDealRankList.add(stockDealRankVo);
+            }
+
+            if (CollectionUtils.isNotEmpty(StockDealRankList)) {
+            	// 등록
+            	stockDealRankDaoService.insertStockDealRankList(StockDealRankList);
             }
 
         } catch (Exception e) {

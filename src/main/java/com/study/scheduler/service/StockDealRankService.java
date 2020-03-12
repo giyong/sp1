@@ -1,5 +1,7 @@
 package com.study.scheduler.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,14 @@ public class StockDealRankService {
 	public int insertStockDealRank(StockDealRankVo stockDealRankVo) {
 
 		return stockDealRankDao.insertStockDealRank(stockDealRankVo);
+	}
+
+	/**
+	 * 주식매매순위 등록
+	 */
+	public int insertStockDealRankList(List<StockDealRankVo> stockDealRankList) {
+
+		return stockDealRankDao.insertStockDealRankList(stockDealRankList);
 	}
 
 }
