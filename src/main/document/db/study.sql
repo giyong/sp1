@@ -121,6 +121,22 @@ CREATE TABLE IF NOT EXISTS 'study'.'tb_lotto' (
   PRIMARY KEY ('turn_no'),
   UNIQUE INDEX 'turn_no_UNIQUE' ('turn_no' ASC))
 ENGINE = InnoDB
+;
+
+-- 주식 매매 순위
+CREATE TABLE `tb_stock_deal_rank` (
+  `deal_day` varchar(8) NOT NULL COMMENT '거래 일자',
+  `rank` int(11) NOT NULL COMMENT '랭크(순위)',
+  `stocks_cd` varchar(45) NOT NULL COMMENT '종목 코드',
+  `stocks_nm` varchar(45) DEFAULT NULL COMMENT '종목 명',
+  `trader_type` varchar(45) DEFAULT NULL COMMENT '거래자',
+  `deal_type` varchar(45) DEFAULT NULL COMMENT '매매유형',
+  `deal_qty` int(11) DEFAULT NULL COMMENT '거래량',
+  `deal_price` int(11) DEFAULT NULL COMMENT '가격',
+  `day_deal_qty` int(11) DEFAULT NULL COMMENT '하루거래량',
+  PRIMARY KEY (`deal_day`,`rank`,`stocks_cd`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='주식_거래_순위'
+;
 
 
 /* ****************************************************

@@ -1,4 +1,4 @@
-package com.study.admin.scheduler;
+package com.study.scheduler.job;
 
 import java.io.IOException;
 import java.util.Date;

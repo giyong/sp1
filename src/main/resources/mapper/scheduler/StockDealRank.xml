@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 공통 코드 -->
+<mapper namespace="StockDealRank">
+
+    <select id="insertStockDealRank" parameterType="com.study.scheduler.domain.StockDealRankVo">
+        /* StockDealRank.insertStockDealRank - 주식매매순위 등록 */
+
+		insert into tb_stock_deal_rank ( deal_day
+		                               , rank
+		                               , stocks_cd
+		                               , stocks_nm
+		                               , trader_type
+		                               , deal_type
+		                               , deal_qty
+		                               , deal_price
+		                               , day_deal_qty
+		                               )
+		values ( #{dealDay}     /* 거래일자 */
+		       , #{rank}        /* 순위 */
+		       , #{stocksCd}    /* 종목코드 */
+		       , #{stocksNm}    /* 종목명 */
+		       , #{traderType}  /* 거래자유형 */
+		       , #{dealType}    /* 거래유형 */
+		       , #{dealQty}     /* 거래수량 */
+		       , #{dealPrice}   /* 거래금액 */
+		       , #{dayDealQty}  /* 하루거래수량 */
+		       )
+    </select>
+
+</mapper>
