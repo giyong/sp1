@@ -16,7 +16,7 @@
         <!-- 어드민 -->
         <mapper resource="mapper/CommCodeAdm.xml" />
         <mapper resource="mapper/UserAdm.xml" />
-<!--         <mapper resource="mapper/NewsAdm.xml" /> -->
-<!--         <mapper resource="mapper/NewsRssAdm.xml" /> -->
+        <mapper resource="mapper/NewsAdm.xml" />
+        <mapper resource="mapper/NewsRssAdm.xml" />
     </mappers>
 </configuration>

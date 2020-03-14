@@ -4,39 +4,39 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class CommPagingVo {
-	
+
 	public CommPagingVo() {
-		this.setCurrentPageNo(1);        //현재 페이지 번호
-		this.setRecordCountPerPage(50);  //한 페이지에 게시되는 데이터 건수
-		this.setPageSize(10);            //페이징 리스트의 사이즈
+		this.setCurrentPageNo(1);        // 현재 페이지 번호
+		this.setRecordCountPerPage(50);  // 한 페이지에 게시되는 데이터 건수
+		this.setPageSize(10);            // 페이징 리스트의 사이즈
 	}
 
 	public CommPagingVo(int currentPageNo, int totalRecordCount) {
-		this.setCurrentPageNo(currentPageNo);        //현재 페이지 번호
+		this.setCurrentPageNo(currentPageNo);        // 현재 페이지 번호
 		this.setTotalRecordCount(totalRecordCount);  // 전체 데이터 건수
 	}
-	
-	/** 
-	 * 현재 페이지 번호 
+
+	/**
+	 * 현재 페이지 번호
 	 */
-	@Getter 
+	@Getter
 	@Setter
 	private int currentPageNo;
-	
+
 	/**
 	 * 한 페이지에 게시되는 데이터 건수
 	 */
 	@Getter
 	@Setter
 	private int recordCountPerPage;
-	
+
 	/**
 	 * 페이징 리스트의 사이즈
 	 */
 	@Getter
 	@Setter
 	private int pageSize;
-	
+
 	/**
 	 * 전데 데이터 건수
 	 */
@@ -45,13 +45,13 @@ public class CommPagingVo {
 	private int totalRecordCount;
 
 	private int totalPageCount;
-	
+
 	private int firstPageNoOnPageList;
-	
+
 	private int lastPageNoOnPageList;
-	
+
 	private int firstRecordIndex;
-	
+
 	private int lastRecordIndex;
 
 	public int getTotalPageCount() {

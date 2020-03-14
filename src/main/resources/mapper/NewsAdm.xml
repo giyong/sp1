@@ -4,7 +4,7 @@
 <!-- 뉴스 -->
 <mapper namespace="NewsAdm">
 
-    <insert id="insertNews" parameterType="com.study.news.domain.NewsVo">
+    <insert id="insertNews" parameterType="com.study.admin.news.domain.NewsVo">
         /* insertNews - 뉴스등록 */
 
 		INSERT INTO tbl_news ( comp_cd
@@ -27,7 +27,7 @@
 		       );
     </insert>
 
-    <update id="updateNews" parameterType="com.study.news.domain.NewsVo">
+    <update id="updateNews" parameterType="com.study.admin.news.domain.NewsVo">
         /* updateNews - 뉴스수정 */
 
         UPDATE tbl_news
@@ -45,7 +45,7 @@
         WHERE news_seq = #{newsSeq}
     </update>
 
-    <select id="selectNews" parameterType="com.study.news.domain.NewsVo" resultType="com.study.news.domain.NewsVo">
+    <select id="selectNews" parameterType="com.study.admin.news.domain.NewsVo" resultType="com.study.admin.news.domain.NewsVo">
         /* selectNews - 뉴스조회 */
 
         SELECT news_seq      /* 뉴스 일련번호 */
