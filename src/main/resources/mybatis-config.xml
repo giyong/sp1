@@ -8,8 +8,15 @@
     </settings>
 
     <mappers>
+        <!-- 스케줄러 -->
         <mapper resource="mapper/scheduler/StockDealRank.xml" />
-<!--         <mapper resource="mapper/news.xml" /> -->
-<!--         <mapper resource="mapper/news_rss_url.xml" /> -->
+
+        <!-- 프론트 -->
+
+        <!-- 어드민 -->
+        <mapper resource="mapper/CommCodeAdm.xml" />
+        <mapper resource="mapper/UserAdm.xml" />
+<!--         <mapper resource="mapper/NewsAdm.xml" /> -->
+<!--         <mapper resource="mapper/NewsRssAdm.xml" /> -->
     </mappers>
 </configuration>

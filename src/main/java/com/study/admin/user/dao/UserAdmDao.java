@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.study.admin.user.domain.LoginUserVo;
 import com.study.admin.user.domain.UserVo;
 
 @Repository
@@ -24,11 +25,11 @@ public class UserAdmDao {
 
 	/**
 	 * 사용자 조회
-	 * @param userVo
+	 * @param loginUserVo
 	 */
-	public UserVo selectUser(UserVo userVo) {
+	public LoginUserVo selectUser(LoginUserVo loginUserVo) {
 
-		return this.sqlSession.selectOne("UserAdm.selectUser", userVo);
+		return (LoginUserVo) this.sqlSession.selectOne("UserAdm.selectUser", loginUserVo);
 	}
 
 }

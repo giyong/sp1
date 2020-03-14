@@ -53,16 +53,17 @@ gapi:
 
 #스케줄러
 scheduler:
-    #날씨 스케줄러
+    #날씨
     weather:
         #스케줄러 수행 여부 - true:동작, false:동작안함
         isStart: false
       
-    #뉴스 스케줄러
+    #뉴스
     news: 
         #스케줄러 수행 여부 - true:동작, false:동작안함
         isStart: false
 
+    #주식매매순위(외국인/매수)
     stockDealRank:
-        isRunning: true
+        isRunning: false
        

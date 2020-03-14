@@ -4,7 +4,7 @@
 <!-- 공통 코드 -->
 <mapper namespace="CommCodeAdm">
 
-    <select id="selectCommCodeList" parameterType="com.study.news.domain.CommCodeVo" resultType="com.study.news.domain.CommCodeVo">
+    <select id="selectCommCodeList" parameterType="com.study.admin.comm.domain.CommCodeVo" resultType="com.study.admin.comm.domain.CommCodeVo">
         /* selectCommCode - 공통코드 조회 */
 
         SELECT code_group_id

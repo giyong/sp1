@@ -7,26 +7,22 @@
     <insert id="insertUser" parameterType="com.study.admin.user.domain.UserVo" useGeneratedKeys="true" keyProperty="userSeq">
     	/* inserUser - 사용자 등록 */
 
-    	INSERT INTO tb_user ( parentSiteTy
+    	INSERT INTO tb_user ( parent_site_type
     	                    , id
     	                    , name
     	                    , email
     	                    , image_url
-    	                    , reg_user_id
-    	                    , upd_user_id
     	                    )
 		VALUES ( #{parentSiteTy}  /* 부모 사이트 종류 - G3 */
-		       , #{id}            
+		       , #{id}
 		       , #{name}          /* 이름 */
 		       , #{email}         /* 이메일 */
 		       , #{imageUrl}      /* 이미지URL */
-		       , 0                /* 등록자ID */
-		       , 0                /* 수정자ID */
 		       )
     </insert>
 
 	<!-- [TODO] -->
-    <update id="updateUserByLoginFailCount" parameterType="com.study.admin.user.domain.UserVo">
+    <update id="updateUserByLoginFailCount" parameterType="com.study.admin.user.domain.LoginUserVo">
     	/* updateUserByLoginFailCount - 로그인 실패 건수 수정 */
 
     	UPDATE tb_user
@@ -35,14 +31,14 @@
     	   AND id = #{id}
     </update>
 
-    <select id="selectUser" parameterType="com.study.admin.user.domain.UserVo" resultType="com.study.admin.user.domain.UserVo">
+    <select id="selectUser" parameterType="com.study.admin.user.domain.LoginUserVo" resultType="com.study.admin.user.domain.LoginUserVo">
         /* selectUser - 사용자 조회 */
 
         SELECT id
-             , name            /* 이름 */
-             , parent_site_ty  /* 부모 사이트 종류 - G3 */
-             , user_yn         /* 사용여부 YN */
-          FROM tb_user         /* 사용자 T */
+             , name              /* 이름 */
+             , parent_site_type  /* 부모 사이트 종류 - G3 */
+             , use_yn            /* 사용여부 YN */
+          FROM tb_user           /* 사용자 T */
 		<where>
 			<if test="id != null and !id.equals('')">
 			    AND id = #{id}

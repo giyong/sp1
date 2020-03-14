@@ -50,7 +50,7 @@ public class AuthProvider implements AuthenticationProvider {
         try {
 			GoogleIdToken idToken = verifier.verify(loginToken);
 
-			if (idToken != null) {
+			if (idToken == null) {
 				throw new UsernameNotFoundException("User Not Found");
 			}
 
@@ -78,11 +78,12 @@ public class AuthProvider implements AuthenticationProvider {
 			LoginUserVo loginUserVo = new LoginUserVo();
 			loginUserVo.setId(userId);
 			loginUserVo.setEmail(email);
-			loginUserVo = (LoginUserVo) userAdmService.selectUser(loginUserVo);
+			loginUserVo = userAdmService.selectUser(loginUserVo);
 
 			//신규가입
 			if (loginUserVo == null) {
 				//신규 사용자 등록
+				loginUserVo = new LoginUserVo();
 				loginUserVo.setParentSiteTy(CommCode.ParentSiteTy.GOOGLE.getCd());  //부모 사이트 종류 - 구글
 				loginUserVo.setId(userId);
 				loginUserVo.setEmail(email);
@@ -105,6 +106,8 @@ public class AuthProvider implements AuthenticationProvider {
 	        roleList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 	        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginEmail, loginEmail, roleList);
+
+	        loginUserVo.setRoleList(roleList);
 	        authenticationToken.setDetails(loginUserVo);
 
 	        return authenticationToken;

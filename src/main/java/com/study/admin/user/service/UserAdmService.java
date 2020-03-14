@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.admin.user.dao.UserAdmDao;
+import com.study.admin.user.domain.LoginUserVo;
 import com.study.admin.user.domain.UserVo;
 
 @Service
@@ -26,9 +27,9 @@ public class UserAdmService {
 	 * 사용자 조회
 	 * @return userVo
 	 */
-	public UserVo selectUser(UserVo userVo) {
+	public LoginUserVo selectUser(LoginUserVo loginUserVo) {
 
-		return userAdmDao.selectUser(userVo);
+		return userAdmDao.selectUser(loginUserVo);
 	}
 
 }
