@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.admin.comm.domain.CommCodeGroupVo;
@@ -50,6 +51,36 @@ public class CommCodeAdmController {
     	return "admin/comm/commCodeGroupList";
     }
 
+    /**
+     * 공통 코드 그룹 목록 Ajax
+     * @param model
+     * @param commCodeVo
+     * @return
+     */
+    @RequestMapping(value = "/comm/getCommCodeGroupListAjaxLoad", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getCommCodeGroupListAjaxLoad(Model model, CommCodeGroupVo commCodeGroupVo) {
+
+    	commCodeGroupVo.setRecordCountPerPage(1);
+    	commCodeGroupVo.setTotalRecordCount(commCodeAdmService.selectCommCodeGroupPageCount(commCodeGroupVo));
+
+    	List<CommCodeGroupVo> commCodeGroupList = new ArrayList<CommCodeGroupVo>();
+
+    	if (commCodeGroupVo.getTotalRecordCount() > 0) {
+
+    		commCodeGroupList = commCodeAdmService.selectCommCodeGroupPageList(commCodeGroupVo);
+    	}
+
+    	model.addAttribute("commCodeGroupVo"  , commCodeGroupVo);
+    	model.addAttribute("commCodeGroupList", commCodeGroupList);
+
+    	return "admin/comm/innerCommCodeGroupList";
+    }
+
+    /**
+     * 공통 코드 목록 조회 Ajax
+     * @param commCodeVo
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/comm/getCommCodeListAjax")
     public HashMap<String, Object> getCommCodeList(CommCodeVo commCodeVo) {

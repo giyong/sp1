@@ -18,7 +18,7 @@
 <nav th:replace="/admin/comm/innerTop.html :: innerTop"></nav>
 <div id="layoutSidenav">
     <!-- 좌측 메뉴 -->
-    <div id="layoutSidenav_nav" th:insert="/admin/comm/innerLeft.html"></div>
+    <div th:replace="/admin/comm/innerLeft.html :: innerLeft"></div>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
@@ -33,9 +33,9 @@
                 </div>
                 -->
                 <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-table mr-1"></i>DataTable Example</div>
+                    <div class="card-header"><i class="fas fa-table mr-1"></i>공통코드그룹</div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div id="codeGroupList" class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
@@ -62,7 +62,7 @@
                                         <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
                                     </li>
                                     <li class="paginate_button page-item" th:each="idx,iterStat : ${#numbers.sequence(commCodeGroupVo.firstPageNoOnPageList, commCodeGroupVo.lastPageNoOnPageList)}" th:classappend="${commCodeGroupVo.currentPageNo} == ${idx} ? active : null">
-                                        <a href="#" tabindex="0" class="page-link" th:onclick="|javascript:alert('${idx}')|" th:text="${idx}"></a>
+                                        <a href="#" tabindex="0" class="page-link" th:onclick="|javascript:getPage('${idx}')|" th:text="${idx}"></a>
                                     </li>
                                     <li class="paginate_button page-item next" id="dataTable_next" th:classappend="${commCodeGroupVo.lastPageNoOnPageList} * ${commCodeGroupVo.pageSize} >= ${commCodeGroupVo.totalRecordCount} ? null : disabled">
                                         <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
@@ -74,9 +74,29 @@
                 </div>
             </div>
         </main>
-        <footer class="py-4 bg-light mt-auto" th:insert="/admin/comm/innerFooter.html"></footer>
+        <footer th:replace="/admin/comm/innerFooter.html :: innerFooter"></footer>
     </div>
 </div>
 <div th:replace="/admin/comm/innerScript.html :: innerScript"></div>
+<script type="text/javascript">
+function getPage(pageNo) {
+    $("#codeGroupList").load(
+     	  "/admin/comm/getCommCodeGroupListAjaxLoad"
+    	, { "currentPageNo" : pageNo }
+    );
+}
+
+$(function () {
+    //Spring Security csrf 관련 설정
+    var token  = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    $(document).ajaxSend(function(e, xhr, options) {
+        if(token && header) {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+});
+</script>
 </body>
 </html>

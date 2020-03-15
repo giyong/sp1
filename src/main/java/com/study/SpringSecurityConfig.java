@@ -49,7 +49,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         		                  , "/js/**"
         		                  , "/img/**"
         		                  , "/favicon.ico"
-        		                  , "/startbootstrap-sb-admin-2-gh-pages/**"
+        		                  , "/startbootstrap-sb-admin-gh-pages/**"
         		                  , "/error**"
         		                  );
     }
@@ -72,7 +72,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl("/admin/user/login")
             .defaultSuccessUrl("/")
             .failureHandler(authFailureHandler)
-            .successHandler(authSuccessHandler).defaultSuccessUrl("/startbootstrap-sb-admin-2-gh-pages/index.html")
+            .successHandler(authSuccessHandler).defaultSuccessUrl("/startbootstrap-sb-admin-gh-pages/dist/index.html")
             .usernameParameter("email")
             .passwordParameter("token")
         .and()
