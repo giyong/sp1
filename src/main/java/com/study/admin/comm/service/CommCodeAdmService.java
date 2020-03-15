@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.admin.comm.dao.CommCodeAdmDao;
+import com.study.admin.comm.domain.CommCodeGroupVo;
 import com.study.admin.comm.domain.CommCodeVo;
 
 /**
@@ -16,6 +17,24 @@ public class CommCodeAdmService {
 
 	@Autowired
 	private CommCodeAdmDao CommCodeAdmDao;
+
+	/**
+	 * 공통코드그룹 목록 조회
+	 * @return
+	 */
+	public int selectCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
+
+		return CommCodeAdmDao.selectCommCodeGroupPageCount(commCodeGroupVo);
+	}
+
+	/**
+	 * 공통코드그룹 목록 조회
+	 * @return
+	 */
+	public List<CommCodeGroupVo> selectCommCodeGroupPageList(CommCodeGroupVo commCodeGroupVo) {
+
+		return CommCodeAdmDao.selectCommCodeGroupPageList(commCodeGroupVo);
+	}
 
 	/**
 	 * 공통코드 목록 조회

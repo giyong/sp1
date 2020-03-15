@@ -4,6 +4,25 @@
 <!-- 공통 코드 -->
 <mapper namespace="CommCodeAdm">
 
+    <select id="selectCommCodeGroupPageCount" parameterType="com.study.admin.comm.domain.CommCodeGroupVo" resultType="int">
+        /* selectCommCodeGroupPageCount - 공통코드그룹 건수 조회 */
+
+        select count(*)
+          from tbl_comm_code_group
+    </select>
+
+    <select id="selectCommCodeGroupPageList" parameterType="com.study.admin.comm.domain.CommCodeGroupVo" resultType="com.study.admin.comm.domain.CommCodeGroupVo">
+        /* selectCommCodeGroupListPage - 공통코드그룹 목록 조회 */
+
+        select code_group_id
+             , code_group_nm
+             , code_group_dc
+             , use_yn
+             , del_yn
+          from tbl_comm_code_group
+        limit #{firstRecordIndex}, #{recordCountPerPage}
+    </select>
+
     <select id="selectCommCodeList" parameterType="com.study.admin.comm.domain.CommCodeVo" resultType="com.study.admin.comm.domain.CommCodeVo">
         /* selectCommCode - 공통코드 조회 */
 
