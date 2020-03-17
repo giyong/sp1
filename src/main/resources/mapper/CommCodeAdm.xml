@@ -14,13 +14,31 @@
     <select id="selectCommCodeGroupPageList" parameterType="com.study.admin.comm.domain.CommCodeGroupVo" resultType="com.study.admin.comm.domain.CommCodeGroupVo">
         /* selectCommCodeGroupListPage - 공통코드그룹 목록 조회 */
 
-        select code_group_id
-             , code_group_nm
-             , code_group_dc
-             , use_yn
-             , del_yn
-          from tbl_comm_code_group
-        limit #{firstRecordIndex}, #{recordCountPerPage}
+        select grp.code_group_id
+             , grp.code_group_nm
+             , grp.code_group_dc
+             , grp.use_yn
+             , grp.del_yn
+          from tbl_comm_code_group grp
+         inner join ( select code_group_id
+                        from tbl_comm_code_group
+                       <where>
+                       <if test="codeGroupId != null and !codeGroupId.equals('')">
+                           and code_group_id = #{codeGroupId}
+                       </if>
+                       <if test="useYn != null and !useYn.equals('')">
+                           and use_yn = #{useYn}
+                       </if>
+                       <if test="delYn != null and !delYn.equals('')">
+                           and del_yn = #{delYn}
+                       </if>
+                       <if test="codeGroupNm != null and !codeGroupNm.equals('')">
+                           and code_group_nm like concat('%', #{codeGroupNm},'%')
+                       </if>
+                       </where>
+                      limit #{firstRecordIndex}, #{recordCountPerPage}
+                     ) grp_pk
+                     using(code_group_id)
     </select>
 
     <select id="selectCommCodeList" parameterType="com.study.admin.comm.domain.CommCodeVo" resultType="com.study.admin.comm.domain.CommCodeVo">
