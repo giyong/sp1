@@ -26,11 +26,43 @@
                     <li class="breadcrumb-item"><a href="index.html">공통</a></li>
                     <li class="breadcrumb-item active">코드그룹</li>
                 </ol>
-                <!--
                 <div class="card mb-4">
-                    <div class="card-body">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>.</div>
+                    <div class="card-body">
+                    <form>
+                        <div class="form-row">
+	                        <div class="form-group col-sm-3">
+	                            <label for="inputEmail3" class="col-form-label">그룹ID</label>
+	                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+	                        </div>
+	                        <div class="form-group col-sm-3">
+	                            <label for="inputEmail3" class="col-form-label">그룹명</label>
+	                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+	                        </div>
+	                        <div class="form-group col-sm-3">
+	                            <label for="inputEmail3" class="col-form-label">사용여부</label>
+	                                <select class="form-control">
+									    <option>전체</option>
+									    <option>사용</option>
+									    <option>미사용</option>
+									</select>
+	                        </div>
+	                        <div class="form-group col-sm-3">
+	                            <label for="inputEmail3" class="col-form-label">삭제여부</label>
+	                                <select class="form-control">
+	                                    <option>전체</option>
+	                                    <option>삭제</option>
+	                                    <option>미삭제</option>
+									</select>
+	                        </div>
+                        </div>
+                        <div class="form-group row text-right">
+                            <div class="col-sm-12">
+                                <a class="btn btn-primary" href="#">조회</a>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
                 </div>
-                -->
                 <div class="card mb-4">
                     <div class="card-header"><i class="fas fa-table mr-1"></i>코드그룹</div>
                     <div class="card-body">
@@ -63,7 +95,7 @@
                                     <li class="paginate_button page-item" th:each="idx,iterStat : ${#numbers.sequence(commCodeGroupVo.firstPageNoOnPageList, commCodeGroupVo.lastPageNoOnPageList)}" th:classappend="${commCodeGroupVo.currentPageNo} == ${idx} ? active : null">
                                         <a href="#" tabindex="0" class="page-link" th:onclick="|javascript:getPage('${idx}')|" th:text="${idx}"></a>
                                     </li>
-                                    <li class="paginate_button page-item next" id="dataTable_next" th:classappend="${commCodeGroupVo.lastPageNoOnPageList} * ${commCodeGroupVo.pageSize} >= ${commCodeGroupVo.totalRecordCount} ? null : disabled">
+                                    <li class="paginate_button page-item next" id="dataTable_next" th:classappend="${commCodeGroupVo.lastPageNoOnPageList} * ${commCodeGroupVo.pageSize} <= ${commCodeGroupVo.totalRecordCount} ? null : disabled">
                                         <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
                                     </li>
                                 </ul>
@@ -83,6 +115,20 @@ function getPage(pageNo) {
      	  "/admin/comm/getCommCodeGroupListAjaxLoad"
     	, { "currentPageNo" : pageNo }
     );
+}
+
+function getPrevPage(pageNo) {
+	pageNo = (pageNo/10) * 10 - 10;
+    getPage(pageNo);
+}
+
+function getNextPage(pageNo) {
+	pageNo = (pageNo/10) * 10 + 11;
+    getPage(pageNo);
+}
+
+function goUpdateForm() {
+
 }
 
 $(function () {
