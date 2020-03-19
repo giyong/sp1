@@ -9,6 +9,20 @@
 
         select count(*)
           from tbl_comm_code_group
+        <where>
+        <if test="codeGroupId != null and !codeGroupId.equals('')">
+            and code_group_id = #{codeGroupId}
+        </if>
+        <if test="useYn != null and !useYn.equals('')">
+            and use_yn = #{useYn}
+        </if>
+        <if test="delYn != null and !delYn.equals('')">
+            and del_yn = #{delYn}
+        </if>
+        <if test="codeGroupNm != null and !codeGroupNm.equals('')">
+            and code_group_nm like concat('%', #{codeGroupNm},'%')
+        </if>
+        </where>
     </select>
 
     <select id="selectCommCodeGroupPageList" parameterType="com.study.admin.comm.domain.CommCodeGroupVo" resultType="com.study.admin.comm.domain.CommCodeGroupVo">
