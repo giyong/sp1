@@ -35,7 +35,6 @@ public class CommCodeAdmController {
     @RequestMapping("/comm/getCommCodeGroupList")
     public String getCommCodeGroupList(Model model, CommCodeGroupVo commCodeGroupVo) {
 
-    	commCodeGroupVo.setRecordCountPerPage(1);
     	commCodeGroupVo.setTotalRecordCount(commCodeAdmService.selectCommCodeGroupPageCount(commCodeGroupVo));
 
     	List<CommCodeGroupVo> commCodeGroupList = new ArrayList<CommCodeGroupVo>();
@@ -60,7 +59,6 @@ public class CommCodeAdmController {
     @RequestMapping(value = "/comm/getCommCodeGroupListAjaxLoad", method = {RequestMethod.GET, RequestMethod.POST})
     public String getCommCodeGroupListAjaxLoad(Model model, CommCodeGroupVo commCodeGroupVo) {
 
-    	commCodeGroupVo.setRecordCountPerPage(1);
     	commCodeGroupVo.setTotalRecordCount(commCodeAdmService.selectCommCodeGroupPageCount(commCodeGroupVo));
 
     	List<CommCodeGroupVo> commCodeGroupList = new ArrayList<CommCodeGroupVo>();

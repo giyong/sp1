@@ -22,6 +22,9 @@
         <td th:text="${vo.useYn}"></td>
         <td th:text="${vo.delYn}"></td>
     </tr>
+    <tr th:if="${#lists.size(commCodeGroupList)} == 0">
+        <td colspan="5" class="text-center">조회 결과가 없습니다.</td>
+    </tr>
     </tbody>
 </table>
 <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">

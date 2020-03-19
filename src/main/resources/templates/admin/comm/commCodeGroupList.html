@@ -28,36 +28,36 @@
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                    <form>
+                    <form id="searchFrm">
                         <div class="form-row">
 	                        <div class="form-group col-sm-3">
-	                            <label for="inputEmail3" class="col-form-label">그룹ID</label>
-	                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+	                            <label for="codeGroupId" class="col-form-label">그룹ID</label>
+	                            <input type="text" class="form-control" id="codeGroupId" name="codeGroupId" placeholder="그룹ID" />
 	                        </div>
 	                        <div class="form-group col-sm-3">
-	                            <label for="inputEmail3" class="col-form-label">그룹명</label>
-	                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+	                            <label for="codeGroupNm" class="col-form-label">그룹명</label>
+	                            <input type="text" class="form-control" id="codeGroupNm" name="codeGroupNm" placeholder="그룹명" />
 	                        </div>
 	                        <div class="form-group col-sm-3">
-	                            <label for="inputEmail3" class="col-form-label">사용여부</label>
-	                                <select class="form-control">
-									    <option>전체</option>
-									    <option>사용</option>
-									    <option>미사용</option>
-									</select>
+	                            <label for="useYn" class="col-form-label">사용여부</label>
+                                <select class="form-control" id="useYn" name="useYn">
+								    <option value="">전체</option>
+								    <option value="Y">사용</option>
+								    <option value="N">미사용</option>
+								</select>
 	                        </div>
 	                        <div class="form-group col-sm-3">
-	                            <label for="inputEmail3" class="col-form-label">삭제여부</label>
-	                                <select class="form-control">
-	                                    <option>전체</option>
-	                                    <option>삭제</option>
-	                                    <option>미삭제</option>
-									</select>
+	                            <label for="delYn" class="col-form-label">삭제여부</label>
+                                <select class="form-control" id="delYn" name="delYn">
+                                    <option value="">전체</option>
+                                    <option value="Y">삭제</option>
+                                    <option value="N">미삭제</option>
+								</select>
 	                        </div>
                         </div>
                         <div class="form-group row text-right">
                             <div class="col-sm-12">
-                                <a class="btn btn-primary" href="#">조회</a>
+                                <a class="btn btn-primary" href="javascript:search();">조회</a>
                             </div>
                         </div>
                     </form>
@@ -85,6 +85,9 @@
                                     <td th:text="${vo.useYn}"></td>
                                     <td th:text="${vo.delYn}"></td>
                                 </tr>
+                                <tr th:if="${#lists.size(commCodeGroupList)} == 0">
+                                    <td colspan="5" class="text-center">조회 결과가 없습니다.</td>
+                                </tr>
                                 </tbody>
                             </table>
                             <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
@@ -93,7 +96,7 @@
                                         <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
                                     </li>
                                     <li class="paginate_button page-item" th:each="idx,iterStat : ${#numbers.sequence(commCodeGroupVo.firstPageNoOnPageList, commCodeGroupVo.lastPageNoOnPageList)}" th:classappend="${commCodeGroupVo.currentPageNo} == ${idx} ? active : null">
-                                        <a href="#" tabindex="0" class="page-link" th:onclick="|javascript:getPage('${idx}')|" th:text="${idx}"></a>
+                                        <a href="#" tabindex="0" class="page-link" th:onclick="|javascript:getList('${idx}')|" th:text="${idx}"></a>
                                     </li>
                                     <li class="paginate_button page-item next" id="dataTable_next" th:classappend="${commCodeGroupVo.lastPageNoOnPageList} * ${commCodeGroupVo.pageSize} <= ${commCodeGroupVo.totalRecordCount} ? null : disabled">
                                         <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
@@ -110,7 +113,14 @@
 </div>
 <div th:replace="/admin/comm/innerScript.html :: innerScript"></div>
 <script type="text/javascript">
-function getPage(pageNo) {
+function search() {
+    $("#codeGroupList").load(
+            "/admin/comm/getCommCodeGroupListAjaxLoad"
+          , $("#searchFrm").serialize()
+    );
+}
+
+function getList(pageNo) {
     $("#codeGroupList").load(
      	  "/admin/comm/getCommCodeGroupListAjaxLoad"
     	, { "currentPageNo" : pageNo }
@@ -119,19 +129,19 @@ function getPage(pageNo) {
 
 function getPrevPage(pageNo) {
 	pageNo = (pageNo/10) * 10 - 10;
-    getPage(pageNo);
+    getList(pageNo);
 }
 
 function getNextPage(pageNo) {
 	pageNo = (pageNo/10) * 10 + 11;
-    getPage(pageNo);
+    getList(pageNo);
 }
 
 function goUpdateForm() {
 
 }
 
-$(function () {
+$(function() {
     //Spring Security csrf 관련 설정
     var token  = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
