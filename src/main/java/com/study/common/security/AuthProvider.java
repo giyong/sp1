@@ -24,7 +24,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.study.admin.user.domain.LoginUserVo;
 import com.study.admin.user.service.UserAdmService;
-import com.study.common.constant.CommCode;
+import com.study.common.constant.CommCd;
 
 @Component("authProvider")
 public class AuthProvider implements AuthenticationProvider {
@@ -84,7 +84,7 @@ public class AuthProvider implements AuthenticationProvider {
 			if (loginUserVo == null) {
 				//신규 사용자 등록
 				loginUserVo = new LoginUserVo();
-				loginUserVo.setParentSiteTy(CommCode.ParentSiteTy.GOOGLE.getCd());  //부모 사이트 종류 - 구글
+				loginUserVo.setParentSiteTy(CommCd.ParentSiteTy.GOOGLE.getCd());  //부모 사이트 종류 - 구글
 				loginUserVo.setId(userId);
 				loginUserVo.setEmail(email);
 				loginUserVo.setName(name);

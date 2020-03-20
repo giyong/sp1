@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
-<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="_csrf" th:content="${_csrf.token}" />
 <title>Tables - SB Admin</title>
 <link href="/startbootstrap-sb-admin-gh-pages/dist/css/styles.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -24,7 +24,7 @@
             <div class="container-fluid">
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="index.html">공통</a></li>
-                    <li class="breadcrumb-item active">코드그룹</li>
+                    <li class="breadcrumb-item active">코드그룹 조회</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
@@ -115,14 +115,14 @@
 <script type="text/javascript">
 function search() {
     $("#codeGroupList").load(
-            "/admin/comm/getCommCodeGroupListAjaxLoad"
+            "/admin/comm/innerCommCodeGroupList"
           , $("#searchFrm").serialize()
     );
 }
 
 function getList(pageNo) {
     $("#codeGroupList").load(
-     	  "/admin/comm/getCommCodeGroupListAjaxLoad"
+     	  "/admin/comm/innerCommCodeGroupList"
     	, { "currentPageNo" : pageNo }
     );
 }

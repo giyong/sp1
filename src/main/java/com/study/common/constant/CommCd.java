@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * 공통코드
  */
-public class CommCode {
+public class CommCd {
 
 	/**
      * YN

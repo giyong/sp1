@@ -17,7 +17,7 @@
                , #{codeGroupNm}
                , #{codeGroupDc}
                , #{useYn}
-               , #{delYn}
+               , 'N'
                )
     </insert>
 

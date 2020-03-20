@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<title>Tables - SB Admin</title>
+<link href="/startbootstrap-sb-admin-gh-pages/dist/css/styles.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<nav th:replace="/admin/comm/innerTop.html :: innerTop"></nav>
+<div id="layoutSidenav">
+    <!-- 좌측 메뉴 -->
+    <div th:replace="/admin/comm/innerLeft.html :: innerLeft"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="index.html">공통</a></li>
+                    <li class="breadcrumb-item active">코드그룹 수정</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                    <form id="searchFrm">
+                        <div class="form-row">
+                            <div class="form-group col-sm-3">
+                                <label for="codeGroupId" class="col-form-label">그룹ID</label>
+                                <input type="text" class="form-control" id="codeGroupId" name="codeGroupId" placeholder="그룹ID" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="codeGroupNm" class="col-form-label">그룹명</label>
+                                <input type="text" class="form-control" id="codeGroupNm" name="codeGroupNm" placeholder="그룹명" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="useYn" class="col-form-label">사용여부</label>
+                                <select class="form-control" id="useYn" name="useYn">
+                                    <option value="">전체</option>
+                                    <option value="Y">사용</option>
+                                    <option value="N">미사용</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="delYn" class="col-form-label">삭제여부</label>
+                                <select class="form-control" id="delYn" name="delYn">
+                                    <option value="">전체</option>
+                                    <option value="Y">삭제</option>
+                                    <option value="N">미삭제</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row text-right">
+                            <div class="col-sm-12">
+                                <a class="btn btn-primary" href="#">등록</a>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="/admin/comm/innerFooter.html :: innerFooter"></footer>
+    </div>
+</div>
+<div th:replace="/admin/comm/innerScript.html :: innerScript"></div>
+<script type="text/javascript">
+$(function() {
+    //Spring Security csrf 관련 설정
+    var token  = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    $(document).ajaxSend(function(e, xhr, options) {
+        if(token && header) {
+            xhr.setRequestHeader(header, token);
+        }
+    });
+});
+</script>
+</body>
+</html>

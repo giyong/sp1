@@ -15,6 +15,7 @@ import com.study.admin.comm.domain.CommCodeGroupVo;
 import com.study.admin.comm.domain.CommCodeVo;
 import com.study.admin.comm.service.CommCodeAdmService;
 import com.study.common.StringSp1Utils;
+import com.study.common.constant.CommCd;
 
 /**
  * 공통코드
@@ -27,7 +28,19 @@ public class CommCodeAdmController {
     private CommCodeAdmService commCodeAdmService;
 
     /**
-     * 공통 코드 그룹 등록
+     * 공통 코드 등록 화면
+     * @param model
+     * @param commCodeVo
+     * @return
+     */
+    @RequestMapping("/comm/insertCommCodeGroupForm")
+    public String insertCommCodeGroupForm(Model model, CommCodeGroupVo commCodeGroupVo) {
+
+    	return "admin/comm/insertCommCodeGroupForm";
+    }
+
+    /**
+     * 공통 코드 그룹 등록 Ajax
      * @param commCodeGroupVo
      * @return
      */
@@ -49,15 +62,31 @@ public class CommCodeAdmController {
     		return map;
     	}
 
-    	commCodeGroupVo.setUseYn("Y");
-    	commCodeGroupVo.setDelYn("N");
+    	if (StringSp1Utils.isBlank(commCodeGroupVo.getUseYn())) {
+    		commCodeGroupVo.setUseYn(CommCd.YN.Y.getCd());  // 사용여부
+    	}
+
     	commCodeAdmService.insertCommCodeGroup(commCodeGroupVo);
 
+    	map.put("RESULT_CD" , "0000");
+		map.put("RESULT_MSG", "성공");
     	return map;
     }
 
     /**
-     * 공통 코드 그룹 수정
+     * 공통 코드 수정 화면
+     * @param model
+     * @param commCodeVo
+     * @return
+     */
+    @RequestMapping("/comm/updateCommCodeGroupForm")
+    public String updateCommCodeGroupForm(Model model, CommCodeGroupVo commCodeGroupVo) {
+
+    	return "admin/comm/updateCommCodeGroupForm";
+    }
+
+    /**
+     * 공통 코드 그룹 수정 Ajax
      * @param commCodeGroupVo
      * @return
      */
@@ -65,11 +94,36 @@ public class CommCodeAdmController {
     @RequestMapping("/comm/updateCommCodeGroupAjax")
     public HashMap<String, Object> updateCommCodeGroupAjax(CommCodeGroupVo commCodeGroupVo) {
 
-    	// TODO 유효성 검사
+    	HashMap<String, Object> map = new HashMap<>();
+
+    	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupId())) {
+    		map.put("RESULT_CD" , "9999");
+    		map.put("RESULT_MSG", "그룹ID가 없습니다.");
+    		return map;
+    	}
+
+    	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupNm())) {
+    		map.put("RESULT_CD" , "9999");
+    		map.put("RESULT_MSG", "그룹명이 없습니다.");
+    		return map;
+    	}
+
+    	if (StringSp1Utils.isBlank(commCodeGroupVo.getUseYn())) {
+    		map.put("RESULT_CD" , "9999");
+    		map.put("RESULT_MSG", "사용여부가 없습니다.");
+    		return map;
+    	}
+
+    	if (StringSp1Utils.isBlank(commCodeGroupVo.getDelYn())) {
+    		map.put("RESULT_CD" , "9999");
+    		map.put("RESULT_MSG", "삭제여부가 없습니다.");
+    		return map;
+    	}
 
     	commCodeAdmService.updateCommCodeGroup(commCodeGroupVo);
 
-    	HashMap<String, Object> map = new HashMap<>();
+    	map.put("RESULT_CD" , "0000");
+		map.put("RESULT_MSG", "성공");
     	return map;
     }
 
@@ -103,8 +157,8 @@ public class CommCodeAdmController {
      * @param commCodeVo
      * @return
      */
-    @RequestMapping(value = "/comm/getCommCodeGroupListAjaxLoad", method = {RequestMethod.GET, RequestMethod.POST})
-    public String getCommCodeGroupListAjaxLoad(Model model, CommCodeGroupVo commCodeGroupVo) {
+    @RequestMapping(value = "/comm/innerCommCodeGroupListAjax", method = {RequestMethod.GET, RequestMethod.POST})
+    public String innerCommCodeGroupListAjax(Model model, CommCodeGroupVo commCodeGroupVo) {
 
     	commCodeGroupVo.setTotalRecordCount(commCodeAdmService.selectCommCodeGroupPageCount(commCodeGroupVo));
 
