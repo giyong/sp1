@@ -16,6 +16,24 @@ public class CommCodeAdmDao {
 	private SqlSession sqlSession;
 
     /**
+     * 공통코드그룹 등록
+     * @return
+     */
+    public int insertCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
+
+    	return this.sqlSession.insert("CommCodeAdm.insertCommCodeGroupPageCount", commCodeGroupVo);
+    }
+
+    /**
+     * 공통코드그룹 수정
+     * @return
+     */
+    public int updateCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
+
+    	return this.sqlSession.update("CommCodeAdm.updateCommCodeGroupPageCount", commCodeGroupVo);
+    }
+
+    /**
      * 공통코드그룹 건수 조회
      * @return
      */

@@ -4,6 +4,34 @@
 <!-- 공통 코드 -->
 <mapper namespace="CommCodeAdm">
 
+    <insert id="insertCommCodeGroup" parameterType="com.study.admin.comm.domain.CommCodeGroupVo">
+        /* insertCommCodeGroup - 공통코드그룹 등록 */
+
+        insert into tbl_comm_code_group ( code_group_id
+                                        , code_group_nm
+                                        , code_group_dc
+                                        , use_yn
+                                        , del_yn
+                                        )
+        values ( #{codeGroupId}
+               , #{codeGroupNm}
+               , #{codeGroupDc}
+               , #{useYn}
+               , #{delYn}
+               )
+    </insert>
+
+    <update id="updateCommCodeGroup" parameterType="com.study.admin.comm.domain.CommCodeGroupVo">
+        /* updateCommCodeGroup - 공통코드그룹 수정 */
+
+        update tbl_comm_code_group
+           set code_group_nm = #{codeGroupNm}
+             , code_group_dc = #{codeGroupDc}
+             , use_yn        = #{useYn}
+             , del_yn        = #{delYn}
+         where code_group_id = #{codeGroupId}
+    </update>
+
     <select id="selectCommCodeGroupPageCount" parameterType="com.study.admin.comm.domain.CommCodeGroupVo" resultType="int">
         /* selectCommCodeGroupPageCount - 공통코드그룹 건수 조회 */
 

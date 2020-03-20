@@ -16,7 +16,25 @@ import com.study.admin.comm.domain.CommCodeVo;
 public class CommCodeAdmService {
 
 	@Autowired
-	private CommCodeAdmDao CommCodeAdmDao;
+	private CommCodeAdmDao commCodeAdmDao;
+
+	/**
+	 * 공통코드그룹 등록
+	 * @return
+	 */
+	public int insertCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
+
+		return commCodeAdmDao.insertCommCodeGroupPageCount(commCodeGroupVo);
+	}
+
+	/**
+	 * 공통코드그룹 수정
+	 * @return
+	 */
+	public int updateCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
+
+		return commCodeAdmDao.updateCommCodeGroupPageCount(commCodeGroupVo);
+	}
 
 	/**
 	 * 공통코드그룹 목록 조회
@@ -24,7 +42,7 @@ public class CommCodeAdmService {
 	 */
 	public int selectCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
 
-		return CommCodeAdmDao.selectCommCodeGroupPageCount(commCodeGroupVo);
+		return commCodeAdmDao.selectCommCodeGroupPageCount(commCodeGroupVo);
 	}
 
 	/**
@@ -33,7 +51,7 @@ public class CommCodeAdmService {
 	 */
 	public List<CommCodeGroupVo> selectCommCodeGroupPageList(CommCodeGroupVo commCodeGroupVo) {
 
-		return CommCodeAdmDao.selectCommCodeGroupPageList(commCodeGroupVo);
+		return commCodeAdmDao.selectCommCodeGroupPageList(commCodeGroupVo);
 	}
 
 	/**
@@ -53,7 +71,7 @@ public class CommCodeAdmService {
 	 */
 	public List<CommCodeVo> selectCommCodeList(CommCodeVo commCodeVo) {
 
-		return CommCodeAdmDao.selectCommCodeList(commCodeVo);
+		return commCodeAdmDao.selectCommCodeList(commCodeVo);
 	}
 
 }
