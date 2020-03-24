@@ -19,18 +19,18 @@ public class CommCodeAdmDao {
      * 공통코드그룹 등록
      * @return
      */
-    public int insertCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
+    public int insertCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
 
-    	return this.sqlSession.insert("CommCodeAdm.insertCommCodeGroupPageCount", commCodeGroupVo);
+    	return this.sqlSession.insert("CommCodeAdm.insertCommCodeGroup", commCodeGroupVo);
     }
 
     /**
      * 공통코드그룹 수정
      * @return
      */
-    public int updateCommCodeGroupPageCount(CommCodeGroupVo commCodeGroupVo) {
+    public int updateCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
 
-    	return this.sqlSession.update("CommCodeAdm.updateCommCodeGroupPageCount", commCodeGroupVo);
+    	return this.sqlSession.update("CommCodeAdm.updateCommCodeGroup", commCodeGroupVo);
     }
 
     /**

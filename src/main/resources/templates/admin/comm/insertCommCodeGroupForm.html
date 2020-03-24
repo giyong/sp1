@@ -27,40 +27,49 @@
                     <li class="breadcrumb-item active">코드그룹 등록</li>
                 </ol>
                 <div class="card mb-4">
+                    <div class="card-header"><i class="fas fa-table mr-1"></i>코드그룹</div>
                     <div class="card-body">
-                    <form id="searchFrm">
+                    <form id="frm" method="post">
                         <div class="form-row">
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-6">
                                 <label for="codeGroupId" class="col-form-label">그룹ID</label>
                                 <input type="text" class="form-control" id="codeGroupId" name="codeGroupId" placeholder="그룹ID" />
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-6">
                                 <label for="codeGroupNm" class="col-form-label">그룹명</label>
                                 <input type="text" class="form-control" id="codeGroupNm" name="codeGroupNm" placeholder="그룹명" />
                             </div>
-                            <div class="form-group col-sm-3">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12">
+                                <label for="codeGroupId" class="col-form-label">설명</label>
+                                <input type="text" class="form-control" id="codeGroupDc" name="codeGroupDc" placeholder="설명" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
                                 <label for="useYn" class="col-form-label">사용여부</label>
                                 <select class="form-control" id="useYn" name="useYn">
-                                    <option value="">전체</option>
                                     <option value="Y">사용</option>
                                     <option value="N">미사용</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-6">
                                 <label for="delYn" class="col-form-label">삭제여부</label>
                                 <select class="form-control" id="delYn" name="delYn">
-                                    <option value="">전체</option>
                                     <option value="Y">삭제</option>
                                     <option value="N">미삭제</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row text-right">
-                            <div class="col-sm-12">
-                                <a class="btn btn-primary" href="#">등록</a>
-                            </div>
-                        </div>
                     </form>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="form-group row text-right">
+                        <div class="col-sm-12">
+                            <a class="btn btn-primary" href="javascript:insertForm();">등록</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,6 +79,27 @@
 </div>
 <div th:replace="/admin/comm/innerScript.html :: innerScript"></div>
 <script type="text/javascript">
+function insertForm() {
+	$.ajax({
+	    url : "/admin/comm/insertCommCodeGroupAjax",
+	    async : true,
+	    type : "POST",
+	    data: $("#frm").serialize(),
+	    dataType : "json",
+	    success : function(o) {
+	    	var resultCd = o.resultCd;
+
+	    	if (resultCd == "0000") {
+	    		window.location.href = "/admin/comm/getCommCodeGroupList";
+	    	}
+	    	else {
+	    		alert(o.resultMsg);
+	    	}
+	    },
+	    error : function(o) {}
+	});
+}
+
 $(function() {
     //Spring Security csrf 관련 설정
     var token  = $("meta[name='_csrf']").attr("content");

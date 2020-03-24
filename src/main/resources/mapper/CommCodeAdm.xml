@@ -78,6 +78,7 @@
                            and code_group_nm like concat('%', #{codeGroupNm},'%')
                        </if>
                        </where>
+                      order by reg_dt desc
                       limit #{firstRecordIndex}, #{recordCountPerPage}
                      ) grp_pk
                      using(code_group_id)

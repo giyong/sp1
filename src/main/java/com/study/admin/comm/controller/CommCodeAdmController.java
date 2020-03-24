@@ -51,14 +51,14 @@ public class CommCodeAdmController {
     	HashMap<String, Object> map = new HashMap<>();
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupId())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "그룹ID가 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "그룹ID가 없습니다.");
     		return map;
     	}
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupNm())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "그룹명이 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "그룹명이 없습니다.");
     		return map;
     	}
 
@@ -68,8 +68,8 @@ public class CommCodeAdmController {
 
     	commCodeAdmService.insertCommCodeGroup(commCodeGroupVo);
 
-    	map.put("RESULT_CD" , "0000");
-		map.put("RESULT_MSG", "성공");
+    	map.put("resultCd" , "0000");
+		map.put("resultMsg", "성공");
     	return map;
     }
 
@@ -97,33 +97,33 @@ public class CommCodeAdmController {
     	HashMap<String, Object> map = new HashMap<>();
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupId())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "그룹ID가 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "그룹ID가 없습니다.");
     		return map;
     	}
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupNm())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "그룹명이 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "그룹명이 없습니다.");
     		return map;
     	}
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getUseYn())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "사용여부가 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "사용여부가 없습니다.");
     		return map;
     	}
 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getDelYn())) {
-    		map.put("RESULT_CD" , "9999");
-    		map.put("RESULT_MSG", "삭제여부가 없습니다.");
+    		map.put("resultCd" , "9999");
+    		map.put("resultMsg", "삭제여부가 없습니다.");
     		return map;
     	}
 
     	commCodeAdmService.updateCommCodeGroup(commCodeGroupVo);
 
-    	map.put("RESULT_CD" , "0000");
-		map.put("RESULT_MSG", "성공");
+    	map.put("resultCd" , "0000");
+		map.put("resultMsg", "성공");
     	return map;
     }
 

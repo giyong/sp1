@@ -24,7 +24,7 @@ public class CommCodeAdmService {
 	 */
 	public int insertCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
 
-		return commCodeAdmDao.insertCommCodeGroupPageCount(commCodeGroupVo);
+		return commCodeAdmDao.insertCommCodeGroup(commCodeGroupVo);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class CommCodeAdmService {
 	 */
 	public int updateCommCodeGroup(CommCodeGroupVo commCodeGroupVo) {
 
-		return commCodeAdmDao.updateCommCodeGroupPageCount(commCodeGroupVo);
+		return commCodeAdmDao.updateCommCodeGroup(commCodeGroupVo);
 	}
 
 	/**
