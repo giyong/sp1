@@ -43,7 +43,7 @@ public class StockDealRankScheduler {
      * 10초에 한번씩 수행
      * @throws InterruptedException
      */
-    @Scheduled(fixedDelayString = "200000")  //스케줄러 동작 완료 후 설정된 시간뒤에 재실행
+//    @Scheduled(fixedDelayString = "200000")  //스케줄러 동작 완료 후 설정된 시간뒤에 재실행
     public void job() throws InterruptedException {
 
     	// TODO 실행여부를 init에서 처리할수 없을까?

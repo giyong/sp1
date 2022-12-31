@@ -1,5 +1,8 @@
 package com.study.admin.news.domain;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.study.admin.comm.domain.CommPagingVo;
 
 import lombok.Getter;
@@ -9,9 +12,11 @@ import lombok.Setter;
 @Setter
 public class NewsRssUrlVo extends CommPagingVo {
 
+//	@NotNull
 	/** RSS 일련번호 */
 	private Long rssSeq;
 
+//	@NotBlank
 	/** 언론사 코드 - G1 */
 	private String compCd;
 

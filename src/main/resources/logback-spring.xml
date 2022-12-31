@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+<!--     <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
 
-    <springProfile name="default">
-        <root level="INFO">
+    <!--로그 파일 저장 위치-->
+	<springProperty scope="context" name="LOG_LEVEL" source="logging.level.root" />
+    <property name="LOGS_PATH" value="./logs"/>
+
+    <springProfile name="dev">
+        <root level="${LOG_LEVEL}">
             <appender-ref ref="CONSOLE" />
             <appender-ref ref="FILE" />
         </root>
 
-        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springframework.web" level="${LOG_LEVEL}"/>
     </springProfile>
+    
+	<root level="${LOG_LEVEL}">
+	  <appender-ref ref="STDOUT" />
+<!-- 	  <appender-ref ref="FILE" /> -->
+	</root>    
     
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 	  <encoder>
@@ -17,16 +26,27 @@
 	  </encoder>
 	</appender>
 	
-	<logger name="jdbc" level="OFF"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_PATH}/logback.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_PATH}/logback.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>	
 	
-	<logger name="jdbc.sqlonly" level="OFF"/>
-	<logger name="jdbc.sqltiming" level="DEBUG"/>
+	<logger name="jdbc" level="OFF"/>
+	<logger name="jdbc.sqlonly" level="INFO"/>
+	<logger name="jdbc.sqltiming" level="INFO"/>
 	<logger name="jdbc.audit" level="OFF"/>
 	<logger name="jdbc.resultset" level="OFF"/>
-	<logger name="jdbc.resultsettable" level="DEBUG"/>
+	<logger name="jdbc.resultsettable" level="INFO"/>
 	<logger name="jdbc.connection" level="OFF"/>
 	
-	<root level="INFO">
-	  <appender-ref ref="STDOUT" />
-	</root>
 </configuration>

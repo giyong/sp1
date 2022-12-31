@@ -9,23 +9,23 @@ spring:
     password: P@ssw0rd
 
   #JPA 설정
-  jpa:
-    hibernate:
-      #스키마 생성 (create, update)
-      ddl-auto: update
-    #DDL 생성 시 데이터베이스 고유의 기능을 사용하는가?
-    generate-ddl: false
-    #실행되는 SQL 문을 보여줄 것인가?
-    show-sql: true
-    #데이터베이스는 무엇을 사용하는가?
-    database: mysql
-    #MySQL 상세 지정
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#  jpa:
+#    hibernate:
+#      #스키마 생성 (create, update)
+#      ddl-auto: update
+#    #DDL 생성 시 데이터베이스 고유의 기능을 사용하는가?
+#    generate-ddl: false
+#    #실행되는 SQL 문을 보여줄 것인가?
+#    show-sql: true
+#    #데이터베이스는 무엇을 사용하는가?
+#    database: mysql
+#    #MySQL 상세 지정
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     
   #출력되는 로그에 색상 출력
   output:
     ansi:
-      enabled: always
+      enabled: NEVER
 
   #thymeleaf 서버 재시작 없이 바로 확인 할수 있도록
   thymeleaf:
@@ -41,10 +41,8 @@ mybatis:
 #로그레벨
 logging:
   level:
-    root: info
-    org:
-      hibernate : info
-  file: application.log
+    root: "debug"
+#  file: application.log
 
 #구글 API
 gapi:
@@ -66,4 +64,5 @@ scheduler:
     #주식매매순위(외국인/매수)
     stockDealRank:
         isRunning: false
+       
        

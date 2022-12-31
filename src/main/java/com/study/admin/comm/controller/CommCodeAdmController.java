@@ -55,7 +55,7 @@ public class CommCodeAdmController {
     		map.put("resultMsg", "그룹ID가 없습니다.");
     		return map;
     	}
-
+ 
     	if (StringSp1Utils.isBlank(commCodeGroupVo.getCodeGroupNm())) {
     		map.put("resultCd" , "9999");
     		map.put("resultMsg", "그룹명이 없습니다.");
